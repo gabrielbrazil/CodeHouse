@@ -1,5 +1,9 @@
 package com.codehouse.configuration;
 
+
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletRegistration.Dynamic;
+
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class ServletSpringMvc extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -17,6 +21,12 @@ public class ServletSpringMvc extends AbstractAnnotationConfigDispatcherServletI
 	@Override
 	protected String[] getServletMappings() {
 		return new String[]{"/"};
+	}
+	
+	
+	protected void customizeRegistration(Dynamic registration){
+		registration.setMultipartConfig(
+				new MultipartConfigElement(""));
 	}
 
 }

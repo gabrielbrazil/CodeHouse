@@ -8,16 +8,19 @@ import org.springframework.format.datetime.DateFormatter;
 import org.springframework.format.datetime.DateFormatterRegistrar;
 import org.springframework.format.support.DefaultFormattingConversionService;
 import org.springframework.format.support.FormattingConversionService;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import br.com.codehouse.dao.ProductDAO;
+import br.com.codehouse.utils.FileSaver;
 
 import com.codehouse.controllers.HomeController;
 import com.codehouse.controllers.ProductsController;
 
 @EnableWebMvc
-@ComponentScan(basePackageClasses={HomeController.class,ProductsController.class,ProductDAO.class})
+@ComponentScan(basePackageClasses={HomeController.class,ProductsController.class,ProductDAO.class,FileSaver.class})
 public class AppWebConfiguration {
 
 	
@@ -46,6 +49,11 @@ public class AppWebConfiguration {
 		registrar.setFormatter(new DateFormatter("yyyy-MM-dd"));
 		registrar.registerFormatters(conversionService);
 		return conversionService;
+	}
+	
+	@Bean
+	public  MultipartResolver multipartResolver(){
+		return new StandardServletMultipartResolver();
 	}
 	
 }

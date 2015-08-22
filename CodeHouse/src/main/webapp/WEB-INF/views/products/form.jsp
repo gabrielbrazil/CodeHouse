@@ -20,7 +20,7 @@
 	</s:hasBindErrors>
 	
 	<s:url value="/produtos/salvar" var="save"/>
-	<form:form method="post" action="${save}" modelAttribute="product" >
+	<form:form method="post" action="${save}" modelAttribute="product" enctype="multipart/form-data" >
 		<div>
 			<label for="title">Title</label>
 			<form:input path="title"/>
@@ -51,6 +51,13 @@
 			<form:input path="prices[${status.index}].value" id="price_${bookType}"/>
 			<form:input type="hidden" path="prices[${status.index}].bookType" value="${bookType}"/> 
 		</div>
+		
+		<div>
+			<label for="summary">Sumario</label>
+			<input type="file" name="summary">
+			<form:errors path="summaryPath" />
+		</div>
+		
 		</c:forEach>
 		
 		<div>

@@ -7,17 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.codehouse.dao.ProductDAO;
 import br.com.codehouse.model.BookType;
 import br.com.codehouse.model.Product;
+import br.com.codehouse.utils.FileSaver;
 
 
 @Controller
@@ -34,12 +33,18 @@ public class ProductsController {
 	@Autowired
 	private ProductDAO productDAO;
 	
+	@Autowired
+	private FileSaver fileSaver;
+	
 	@RequestMapping(value="/salvar", method=RequestMethod.POST )
-	public ModelAndView save(@Valid Product product,BindingResult bindingResult,RedirectAttributes redirectAttribute){
+	public ModelAndView save(MultipartFile summary,@Valid Product product,BindingResult bindingResult,RedirectAttributes redirectAttribute){
+		
 		if(bindingResult.hasErrors()){
 			System.out.println("passou no form");
 			return form(product);
 		}
+		String path = fileSaver.write("uploaded-images",summary);
+		product.setSummaryPath(path);
 		productDAO.save(product);
 		redirectAttribute.addFlashAttribute("sucesso","Salvo com sucesso");
 		return new ModelAndView("redirect:novo");

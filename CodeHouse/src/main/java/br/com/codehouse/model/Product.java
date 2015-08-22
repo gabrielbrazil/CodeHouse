@@ -33,7 +33,7 @@ public class Product {
 	private List<Price> prices = new ArrayList<Price>();
 	@DateTimeFormat
 	private Calendar releaseDate;
-	
+	private String summaryPath;
 	public Product() {}
 	
 	
@@ -92,6 +92,26 @@ public class Product {
 	public void setReleaseDate(Calendar releaseDate) {
 		this.releaseDate = releaseDate;
 	}
+
+
+
+
+	public String getSummaryPath() {
+		return summaryPath;
+	}
+
+
+
+
+	public void setSummaryPath(String summaryPath) {
+		this.summaryPath = summaryPath;
+	}
+
+
+
+
+
+	
 	
 	
 	
